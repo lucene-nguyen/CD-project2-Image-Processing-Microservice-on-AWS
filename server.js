@@ -38,7 +38,11 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
       //  1. validate the image_url query
       const {image_url} = req.query;
       if(!image_url){
-        return res.status(400).send("missing image")
+        return res.status(422).send("missing image")
+      }
+
+      if(Array.isArray(image_url)){
+        return res.status(422).send("Only one image can be processed at a time")
       }
 
       //  2. call filterImageFromURL(image_url) to filter the image
