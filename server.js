@@ -64,6 +64,11 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
       res.status(500).send(error.message)
     } 
   });
+
+  app.get( "/", async (req, res) => {
+      return res.status(200).send("Welcome to the Cloud!")
+  });
+  
   
 
   // Start the Server
