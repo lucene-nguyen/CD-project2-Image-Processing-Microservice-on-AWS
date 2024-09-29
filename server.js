@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
+import {filterImageFromURL, deleteLocalFiles, isImageUrl} from './util/util.js';
 
 
 
@@ -43,6 +43,10 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
 
       if(Array.isArray(image_url)){
         return res.status(422).send("Only one image can be processed at a time")
+      }
+
+      if(!isImageUrl(image_url)){
+        return res.status(422).send("Invalid image URL")
       }
 
       //  2. call filterImageFromURL(image_url) to filter the image

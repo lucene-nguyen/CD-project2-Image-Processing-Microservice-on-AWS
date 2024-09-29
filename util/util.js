@@ -46,3 +46,12 @@ const __dirname = path.dirname(__filename);
     fs.unlinkSync(file);
   }
 }
+
+// check image url validity
+export function isImageUrl(url) {
+  // Regular expression to match common image file extensions
+  const imageExtensions = /\.(jpg|jpeg|png|gif|bmp|webp|svg)$/i;
+  
+  // Test the URL against the regular expression
+  return imageExtensions.test(url);
+}
