@@ -2,6 +2,7 @@ import fs from "fs";
 import Jimp from "jimp";
 import path from 'path';
 import { fileURLToPath } from 'url';
+import axios from 'axios';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,10 +14,13 @@ const __dirname = path.dirname(__filename);
 //    inputURL: string - a publicly accessible url to an image file
 // RETURNS
 //    an absolute path to a filtered image locally saved file
- export async function filterImageFromURL(inputURL) {
+export async function filterImageFromURL(inputURL) {
   return new Promise(async (resolve, reject) => {
     try {
-      const photo = await Jimp.read(inputURL);
+      const photoBuffer = await axios.get(inputURL, {
+        responseType: 'arraybuffer',
+      })
+      const photo = await Jimp.read(Buffer.from(photoBuffer?.data, "binary"));
       const tmpDir = path.join(__dirname, 'tmp');
       if (!fs.existsSync(tmpDir)) {
         fs.mkdirSync(tmpDir);
